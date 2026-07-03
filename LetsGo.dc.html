@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:#FBF6EC;color:#15140E;font-family:'General Sans','Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  summary::-webkit-details-marker{display:none;}
+  summary{list-style:none;cursor:pointer;}
+  a{color:inherit;}
+  ::selection{background:#FF6B45;color:#FBF6EC;}
+  @keyframes lg-stamp{0%{transform:scale(1.18) rotate(-9deg);opacity:0;}55%{transform:scale(.93) rotate(-9deg);opacity:1;}100%{transform:scale(1) rotate(-9deg);opacity:1;}}
+  @keyframes lg-marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+  @keyframes lg-launch{0%{transform:translate(0,0);opacity:1;}100%{transform:translate(70px,-110px);opacity:0;}}
+  @media (prefers-reduced-motion: reduce){*{animation:none !important;}html{scroll-behavior:auto;}}
+  @media (min-width:620px){[data-how-grid]{grid-template-columns:1fr 1fr !important;}[data-name-row]{grid-template-columns:1fr 1fr !important;}}
+  @media (min-width:900px){
+    [data-nav-links]{display:flex !important;}
+    [data-nav-ghost]{display:inline-flex !important;}
+    [data-hero]{grid-template-columns:1.05fr 0.95fr !important;}
+    [data-platform]{grid-template-columns:1fr 1fr !important;}
+    [data-mentor-teaser]{grid-template-columns:1.1fr 0.9fr !important;}
+    [data-mentor-hero]{grid-template-columns:1.05fr 0.95fr !important;}
+    [data-pricing-grid]{grid-template-columns:repeat(3,1fr) !important;}
+  }
+  @media (min-width:1000px){[data-how-grid]{grid-template-columns:repeat(4,1fr) !important;}[data-thread-line]{display:block !important;}}
+  @media (min-width:560px){[data-scrim]{align-items:center !important;}[data-modal-card]{border-radius:22px !important;}}
+</style>
+</helmet>
+
+<div style="position:relative;overflow-x:clip;min-height:100vh;">
+<div style="position:fixed;inset:0;pointer-events:none;z-index:1;opacity:0.05;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E&quot;);"></div>
+
+<!-- ================= NAV ================= -->
+<nav style="position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;padding:18px clamp(20px,5vw,64px);background:rgba(251,246,236,0.82);backdrop-filter:blur(14px);border-bottom:1px solid #E4DBC8;">
+  <a href="#top" onClick="{{ goHome }}" style="font-family:'Fraunces',serif;font-weight:560;font-size:24px;letter-spacing:-0.02em;text-decoration:none;color:#15140E;">Lets<span style="color:#FF6B45;">Go</span>🚀</a>
+  <div style="display:none;align-items:center;gap:30px;" data-nav-links>
+    <a href="#how" style="text-decoration:none;white-space:nowrap;color:#3a382e;font-size:15.5px;font-weight:500;">How it works</a>
+    <a href="#skills" style="text-decoration:none;white-space:nowrap;color:#3a382e;font-size:15.5px;font-weight:500;">Skills</a>
+    <a href="#pricing" style="text-decoration:none;white-space:nowrap;color:#3a382e;font-size:15.5px;font-weight:500;">Pricing</a>
+    <a href="#faq" style="text-decoration:none;white-space:nowrap;color:#3a382e;font-size:15.5px;font-weight:500;">FAQ</a>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <a href="#mentor" onClick="{{ goMentor }}" style="display:none;align-items:center;gap:7px;white-space:nowrap;text-decoration:none;font-size:15px;font-weight:600;color:#15140E;padding:10px 16px;border-radius:999px;border:1px solid #E4DBC8;" data-nav-ghost>For mentors<span style="width:7px;height:7px;border-radius:999px;background:#16B268;display:inline-block;"></span></a>
+    <button onClick="{{ openClient }}" style="font-family:inherit;cursor:pointer;white-space:nowrap;font-size:15px;font-weight:600;color:#15140E;background:#FF6B45;border:none;padding:11px 20px;border-radius:999px;box-shadow:0 6px 18px rgba(255,107,69,0.28);transition:transform .2s ease, box-shadow .2s ease, background .2s ease;" style-hover="transform:translateY(-1px);box-shadow:0 10px 24px rgba(255,107,69,0.36);background:#f65b34;">For Individuals / Teams 🚀</button>
+  </div>
+</nav>
+
+<span id="top"></span>
+
+<!-- ============ HOME ROUTE ============ -->
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+<main style="position:relative;z-index:2;">
+
+  <!-- HERO -->
+  <section style="position:relative;display:grid;grid-template-columns:1fr;gap:clamp(40px,5vw,72px);align-items:center;padding:clamp(48px,7vw,96px) clamp(20px,5vw,64px) clamp(56px,7vw,110px);max-width:1240px;margin:0 auto;" data-hero>
+    <div data-reveal style="max-width:640px;">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:0.16em;text-transform:uppercase;color:#0E8F52;margin-bottom:22px;">AI upskilling that actually works</div>
+      <h1 style="font-family:'Fraunces',Georgia,serif;font-weight:460;font-size:clamp(42px,6.6vw,74px);line-height:1.02;letter-spacing:-0.022em;margin:0 0 24px;color:#15140E;">Your team ships real AI work in <span style="position:relative;white-space:nowrap;font-style:italic;">30 minutes<svg viewBox="0 0 220 14" preserveAspectRatio="none" style="position:absolute;left:0;right:0;bottom:-8px;width:100%;height:12px;overflow:visible;"><path data-draw d="M4 9 C 55 2, 150 2, 216 7" fill="none" stroke="#FF6B45" stroke-width="4" stroke-linecap="round"/></svg></span>.</h1>
+      <p style="font-size:clamp(17px,2vw,19px);line-height:1.6;color:#4a473c;margin:0 0 32px;max-width:520px;">Customized 1:1 sessions with AI experts from some of the world's leading companies. <strong style="color:#15140E;font-weight:600;">100% outcome guaranteed.</strong></p>
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:16px;">
+        <button onClick="{{ openClient }}" style="font-family:inherit;cursor:pointer;font-size:17px;font-weight:600;color:#15140E;background:#FF6B45;border:none;padding:15px 28px;border-radius:999px;box-shadow:0 10px 26px rgba(255,107,69,0.3);transition:transform .2s ease, box-shadow .2s ease, background .2s ease;" style-hover="transform:translateY(-2px);box-shadow:0 14px 32px rgba(255,107,69,0.4);background:#f65b34;">For Individuals / Teams 🚀</button>
+        <a href="#how" style="display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-size:16px;font-weight:600;color:#15140E;padding:14px 8px;">See how it works <span style="color:#0E8F52;">→</span></a>
+      </div>
+    </div>
+
+    <!-- Composed session visual -->
+    <div data-reveal data-reveal-delay="120" style="position:relative;justify-self:center;width:100%;max-width:520px;">
+      <div style="position:relative;background:#FFFFFF;border:1px solid #E4DBC8;border-radius:24px;padding:26px;box-shadow:0 30px 70px -30px rgba(14,59,46,0.35);">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#8a8570;letter-spacing:0.04em;">app.letsgo.co/session</div>
+          <div style="display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#0E8F52;"><span style="width:7px;height:7px;border-radius:999px;background:#16B268;box-shadow:0 0 0 3px rgba(22,178,104,0.18);"></span>LIVE</div>
+        </div>
+        <!-- thread -->
+        <div style="display:flex;align-items:center;justify-content:center;gap:0;margin-bottom:22px;">
+          <div style="text-align:center;">
+            <div style="width:56px;height:56px;border-radius:999px;background:#0E3B2E;color:#FBF6EC;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-size:20px;box-shadow:0 0 0 3px rgba(22,178,104,0.4);">M</div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#8a8570;margin-top:7px;letter-spacing:0.08em;">MENTOR</div>
+          </div>
+          <svg viewBox="0 0 120 40" style="width:120px;height:40px;flex-shrink:0;"><path d="M6 30 Q 60 -6 114 30" fill="none" stroke="#16B268" stroke-width="2" stroke-dasharray="1 6" stroke-linecap="round"/></svg>
+          <div style="text-align:center;">
+            <div style="width:56px;height:56px;border-radius:999px;background:#FF6B45;color:#15140E;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-size:20px;box-shadow:0 0 0 3px rgba(255,107,69,0.28);">You</div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#8a8570;margin-top:7px;letter-spacing:0.08em;">YOU</div>
+          </div>
+        </div>
+        <div style="font-family:'Fraunces',serif;font-size:16px;font-weight:500;margin-bottom:4px;">Clay + AI Lead Enrichment</div>
+        <div style="font-size:12.5px;color:#8a8570;font-family:'JetBrains Mono',monospace;margin-bottom:16px;">SESSION 2 OF 3</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;align-items:center;gap:10px;font-size:13.5px;color:#4a473c;"><span style="width:18px;height:18px;border-radius:999px;background:#16B268;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;">✓</span>Set up Clay table with LinkedIn + Clearbit</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:13.5px;color:#4a473c;"><span style="width:18px;height:18px;border-radius:999px;background:#16B268;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;">✓</span>Write first-line prompt from company context</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:13.5px;color:#a9a48c;"><span style="width:18px;height:18px;border-radius:999px;border:1.5px solid #d8cfb8;flex-shrink:0;"></span>Connect to HubSpot — trigger on enrich</div>
+        </div>
+      </div>
+      <!-- shipped stamp float -->
+      <div data-stamp style="position:absolute;top:-18px;right:-10px;width:96px;height:96px;border-radius:999px;background:#FBF6EC;border:2px solid #16B268;display:flex;flex-direction:column;align-items:center;justify-content:center;transform:rotate(-9deg);box-shadow:0 12px 28px -10px rgba(14,143,82,0.5);animation:lg-stamp .5s ease .5s both;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.1em;color:#0E8F52;">SHIPPED</div>
+        <div style="font-size:22px;color:#16B268;line-height:1;">✓</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOGO WALL -->
+  <section style="background:#F2EAD9;border-top:1px solid #E4DBC8;border-bottom:1px solid #E4DBC8;padding:26px 0;overflow:hidden;">
+    <div style="text-align:center;font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:0.12em;text-transform:uppercase;color:#8a8570;margin-bottom:20px;padding:0 20px;">With AI experts who've worked at leading companies, including</div>
+    <div style="position:relative;width:100%;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);">
+      <div style="display:flex;width:max-content;align-items:center;gap:56px;animation:lg-marquee 40s linear infinite;" style-hover="animation-play-state:paused;">
+        <span style="font-weight:600;font-size:19px;color:rgba(21,20,14,0.42);white-space:nowrap;">Triple Whale</span>
+        <span style="font-weight:600;font-size:19px;color:rgba(21,20,14,0.42);white-space:nowrap;">Accenture</span>
+        <span style="font-weight:600;font-size:19px;color:rgba(21,20,14,0.42);white-space:nowrap;">beehiiv</span>
+        <span style="font-weight:600;font-size:19px;color:rgba(21,20,14,0.42);white-space:nowrap;">Ramp</span>
+        <span style="font-weight:600;font-size:19px;color:rgba(21,20,14,0.42);white-space:nowrap;">AppsFlyer</span>
+        <span style="font-weight:600;font-size:19px;color:rgba(21,20,14,0.42);white-space:nowrap;">Gartner</span>
+        <span style="font-weight:600;font-size:19px;color:rgba(21,20,14,0.42);white-space:nowrap;">LinkedIn</span>
+        <span style="font-weight:600;font-size:19px;color:rgba(21,20,14,0.42);white-space:nowrap;">Yotpo</span>
+        <span style="font-weight:600;font-size:19px;color:rgba(21,20,14,0.42);white-space:nowrap;">Dream</span>
+        <span style="font-weight:600;font-size:19px;color:rgba(21,20,14,0.42);white-space:nowrap;">OLIPOP</span>
+        <span style="font-weight:600;font-size:19px;color:rgba(21,20,14,0.42);white-space:nowrap;">Jones Road Beauty</span>
+        <span style="font-weight:600;font-size:19px;color:rgba(21,20,14,0.42);white-space:nowrap;">Port.io</span>
+        <span style="font-weight:600;font-size:19px;color:rgba(21,20,14,0.42);white-space:nowrap;">RallyUp</span>
+        <span style="font-weight:600;font-size:19px;color:rgba(21,20,14,0.42);white-space:nowrap;">NICE Systems</span>
+        <span style="font-weight:600;font-size:19px;color:rgba(21,20,14,0.42);white-space:nowrap;">Triple Whale</span>
+        <span style="font-weight:600;font-size:19px;color:rgba(21,20,14,0.42);white-space:nowrap;">Accenture</span>
+        <span style="font-weight:600;font-size:19px;color:rgba(21,20,14,0.42);white-space:nowrap;">beehiiv</span>
+        <span style="font-weight:600;font-size:19px;color:rgba(21,20,14,0.42);white-space:nowrap;">Ramp</span>
+        <span style="font-weight:600;font-size:19px;color:rgba(21,20,14,0.42);white-space:nowrap;">AppsFlyer</span>
+        <span style="font-weight:600;font-size:19px;color:rgba(21,20,14,0.42);white-space:nowrap;">Gartner</span>
+        <span style="font-weight:600;font-size:19px;color:rgba(21,20,14,0.42);white-space:nowrap;">LinkedIn</span>
+        <span style="font-weight:600;font-size:19px;color:rgba(21,20,14,0.42);white-space:nowrap;">Yotpo</span>
+        <span style="font-weight:600;font-size:19px;color:rgba(21,20,14,0.42);white-space:nowrap;">Dream</span>
+        <span style="font-weight:600;font-size:19px;color:rgba(21,20,14,0.42);white-space:nowrap;">OLIPOP</span>
+        <span style="font-weight:600;font-size:19px;color:rgba(21,20,14,0.42);white-space:nowrap;">Jones Road Beauty</span>
+        <span style="font-weight:600;font-size:19px;color:rgba(21,20,14,0.42);white-space:nowrap;">Port.io</span>
+        <span style="font-weight:600;font-size:19px;color:rgba(21,20,14,0.42);white-space:nowrap;">RallyUp</span>
+        <span style="font-weight:600;font-size:19px;color:rgba(21,20,14,0.42);white-space:nowrap;">NICE Systems</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- MANIFESTO -->
+  <section style="position:relative;background:linear-gradient(180deg,#0E3B2E,#0A2C22);color:#FBF6EC;padding:clamp(72px,10vw,140px) clamp(20px,5vw,64px);overflow:hidden;">
+    <svg viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.1;pointer-events:none;"><path d="M-40 520 Q 400 200 700 340 T 1240 120" fill="none" stroke="#16B268" stroke-width="2"/><circle cx="700" cy="340" r="8" fill="#16B268"/><circle cx="240" cy="392" r="8" fill="#FF6B45"/></svg>
+    <div style="max-width:920px;margin:0 auto;position:relative;">
+      <div data-reveal style="font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:0.16em;text-transform:uppercase;color:#5fd39a;margin-bottom:28px;">Our manifesto</div>
+      <h2 data-reveal style="font-family:'Fraunces',serif;font-weight:400;font-style:italic;font-size:clamp(28px,4.2vw,50px);line-height:1.16;letter-spacing:-0.015em;margin:0 0 40px;color:#FBF6EC;">Humans have a deep, relentless desire to grow and reach their full potential…</h2>
+      <div data-reveal style="max-width:720px;display:flex;flex-direction:column;gap:22px;font-size:clamp(16px,1.8vw,18.5px);line-height:1.72;color:rgba(251,246,236,0.82);">
+        <p style="margin:0;">But the way we learn today is completely broken. We're drowning in passive courses, video playlists, and isolated tutorials, leaving us certified on paper but stuck and lonely in reality. It's crazy that we have more information at our fingertips than any generation in history, yet we feel more disconnected and stagnant than ever. The tools are all around us, but the format is entirely wrong. In a world dominated by AI, the nuanced, high-agency skills that actually matter can't be scraped or automated. They have to be passed down <span style="color:#FBF6EC;font-weight:500;position:relative;white-space:nowrap;">from person to person<svg viewBox="0 0 200 12" preserveAspectRatio="none" style="position:absolute;left:0;bottom:-6px;width:100%;height:10px;overflow:visible;"><path d="M3 7 C 60 1, 140 1, 197 5" fill="none" stroke="#FF6B45" stroke-width="3" stroke-linecap="round"/></svg></span>.</p>
+        <p style="margin:0;">LetsGo is unlocking the world's latent expertise, connecting people who want to grow with the mentors who can actually take them there through genuine, 1:1, accountability-driven partnership. This is far bigger than just building another tech platform; it's a shared movement to reclaim what we're capable of. By finally bringing the right human format to learning, we are doubling down on the human edge and rallying around a massive, clear mission:</p>
+      </div>
+      <p data-reveal style="font-family:'Fraunces',serif;font-style:italic;font-weight:400;font-size:clamp(24px,3.4vw,40px);line-height:1.24;letter-spacing:-0.015em;margin:48px 0 0;color:#5fd39a;max-width:820px;">Helping humanity become more skilled, fulfilled, and deeply connected.</p>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how" style="padding:clamp(72px,9vw,120px) clamp(20px,5vw,64px);max-width:1200px;margin:0 auto;">
+    <div data-reveal style="max-width:720px;margin-bottom:56px;">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:0.16em;text-transform:uppercase;color:#0E8F52;margin-bottom:18px;">How it works</div>
+      <h2 style="font-family:'Fraunces',serif;font-weight:440;font-size:clamp(32px,4.4vw,48px);line-height:1.08;letter-spacing:-0.02em;margin:0 0 14px;">Skill. Mentor. Session. Outcome.</h2>
+      <p style="font-size:18px;line-height:1.6;color:#4a473c;margin:0;">Four steps. You set the direction. Your team ships the result.</p>
+    </div>
+    <div style="position:relative;">
+      <svg viewBox="0 0 1000 40" preserveAspectRatio="none" style="position:absolute;top:28px;left:0;width:100%;height:40px;display:none;pointer-events:none;" data-thread-line><path data-draw d="M60 30 C 300 -14, 700 54, 940 12" fill="none" stroke="#16B268" stroke-width="2" stroke-dasharray="1 7" stroke-linecap="round"/></svg>
+      <div style="display:grid;grid-template-columns:1fr;gap:24px;" data-how-grid>
+        <div data-reveal data-reveal-delay="0" style="background:#FFFFFF;border:1px solid #E4DBC8;border-radius:20px;padding:26px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;"><span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#16B268;font-weight:600;letter-spacing:0.08em;">01</span><span style="width:44px;height:44px;border-radius:12px;background:rgba(22,178,104,0.1);display:flex;align-items:center;justify-content:center;">📋</span></div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#8a8570;margin-bottom:8px;">Manager picks skills</div>
+          <h3 style="font-size:19px;font-weight:600;margin:0 0 8px;line-height:1.25;">Choose what your team needs to ship</h3>
+          <p style="font-size:14.5px;line-height:1.55;color:#6a6656;margin:0;">Browse the AI skill catalog, pick the skills your team needs, and set a goal per person or by role.</p>
+        </div>
+        <div data-reveal data-reveal-delay="90" style="background:#FFFFFF;border:1px solid #E4DBC8;border-radius:20px;padding:26px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;"><span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#16B268;font-weight:600;letter-spacing:0.08em;">02</span><span style="width:44px;height:44px;border-radius:12px;background:rgba(22,178,104,0.1);display:flex;align-items:center;justify-content:center;">🧵</span></div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#8a8570;margin-bottom:8px;">We match your team</div>
+          <h3 style="font-size:19px;font-weight:600;margin:0 0 8px;line-height:1.25;">Each person gets their mentor</h3>
+          <p style="font-size:14.5px;line-height:1.55;color:#6a6656;margin:0;">Every person is matched to a vetted mentor actively doing that skill now. Not someone who used to.</p>
+        </div>
+        <div data-reveal data-reveal-delay="180" style="background:#FFFFFF;border:1px solid #E4DBC8;border-radius:20px;padding:26px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;"><span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#16B268;font-weight:600;letter-spacing:0.08em;">03</span><span style="width:44px;height:44px;border-radius:12px;background:rgba(22,178,104,0.1);display:flex;align-items:center;justify-content:center;">⚡</span></div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#8a8570;margin-bottom:8px;">Live 1:1 sessions</div>
+          <h3 style="font-size:19px;font-weight:600;margin:0 0 8px;line-height:1.25;">30 minutes. Something ships.</h3>
+          <p style="font-size:14.5px;line-height:1.55;color:#6a6656;margin:0;">Live working sessions in a shared workspace, with an AI-written recap and next step after every call.</p>
+        </div>
+        <div data-reveal data-reveal-delay="270" style="background:#0E3B2E;color:#FBF6EC;border:1px solid #0E3B2E;border-radius:20px;padding:26px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;"><span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#5fd39a;font-weight:600;letter-spacing:0.08em;">04</span><span style="width:44px;height:44px;border-radius:12px;background:rgba(95,211,154,0.16);display:flex;align-items:center;justify-content:center;">📈</span></div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#5fd39a;margin-bottom:8px;">You track progress</div>
+          <h3 style="font-size:19px;font-weight:600;margin:0 0 8px;line-height:1.25;">Manager dashboard shows everything</h3>
+          <p style="font-size:14.5px;line-height:1.55;color:rgba(251,246,236,0.78);margin:0;">Sessions booked, AI skills completed, outcomes shipped. The ROI case writes itself.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLATFORM / DASHBOARD -->
+  <section style="background:#E7EFE9;border-top:1px solid #d8e3db;border-bottom:1px solid #d8e3db;padding:clamp(72px,9vw,120px) clamp(20px,5vw,64px);">
+    <div style="max-width:1140px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:clamp(40px,5vw,64px);align-items:center;" data-platform>
+      <div data-reveal>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:0.16em;text-transform:uppercase;color:#0E8F52;margin-bottom:18px;">The platform</div>
+        <h2 style="font-family:'Fraunces',serif;font-weight:440;font-size:clamp(32px,4.4vw,48px);line-height:1.08;letter-spacing:-0.02em;margin:0 0 16px;">Built around the outcome, not the call.</h2>
+        <p style="font-size:18px;line-height:1.6;color:#3f5a4d;margin:0 0 24px;max-width:460px;">Every piece of the product exists to make sure something ships. For your team member, and for your dashboard.</p>
+        <div style="display:inline-flex;align-items:center;gap:8px;padding:9px 15px;border-radius:999px;background:#FFFFFF;border:1px solid #16B268;font-family:'JetBrains Mono',monospace;font-size:12.5px;color:#0E8F52;font-weight:500;">🛡️ 100% outcome guarantee</div>
+      </div>
+      <!-- dashboard chip card -->
+      <div data-reveal data-reveal-delay="120" style="background:#FFFFFF;border:1px solid #d8e3db;border-radius:22px;box-shadow:0 40px 80px -40px rgba(14,59,46,0.4);padding:22px;transform:rotate(-1.2deg);">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:16px;border-bottom:1px solid #eef0e6;margin-bottom:18px;">
+          <div style="display:flex;align-items:center;gap:8px;"><span style="font-family:'Fraunces',serif;font-weight:560;font-size:16px;">LetsGo</span><span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#8a8570;letter-spacing:0.06em;">DASHBOARD</span></div>
+          <div style="display:flex;gap:14px;font-size:12.5px;color:#8a8570;"><span>Team</span><span>Skills</span><span style="color:#16B268;font-weight:600;">Sessions</span></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div style="background:#FBF6EC;border:1px solid #E4DBC8;border-radius:14px;padding:16px;"><div style="font-family:'JetBrains Mono',monospace;font-size:30px;font-weight:600;color:#15140E;line-height:1;">12</div><div style="font-size:12px;color:#8a8570;margin-top:6px;">Sessions done</div></div>
+          <div style="background:#FBF6EC;border:1px solid #E4DBC8;border-radius:14px;padding:16px;"><div style="font-family:'JetBrains Mono',monospace;font-size:30px;font-weight:600;color:#15140E;line-height:1;">9</div><div style="font-size:12px;color:#8a8570;margin-top:6px;">AI skills shipped</div></div>
+          <div style="background:rgba(22,178,104,0.08);border:1px solid rgba(22,178,104,0.35);border-radius:14px;padding:16px;"><div style="font-family:'JetBrains Mono',monospace;font-size:30px;font-weight:600;color:#0E8F52;line-height:1;">8</div><div style="font-size:12px;color:#3f5a4d;margin-top:6px;">Team members active</div></div>
+          <div style="background:#FBF6EC;border:1px solid #E4DBC8;border-radius:14px;padding:16px;"><div style="font-family:'JetBrains Mono',monospace;font-size:30px;font-weight:600;color:#15140E;line-height:1;">4</div><div style="font-size:12px;color:#8a8570;margin-top:6px;">Skills in progress</div></div>
+        </div>
+        <div style="margin-top:14px;display:flex;align-items:center;justify-content:space-between;background:#0E3B2E;border-radius:14px;padding:14px 16px;">
+          <div><div style="font-size:13px;color:#FBF6EC;font-weight:500;">Outcomes shipped</div><div style="font-size:11.5px;color:rgba(251,246,236,0.6);font-family:'JetBrains Mono',monospace;">ACROSS TEAM</div></div>
+          <div style="display:inline-flex;align-items:center;gap:7px;padding:6px 12px;border-radius:999px;border:1.5px solid #16B268;background:rgba(22,178,104,0.12);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.1em;color:#5fd39a;">SHIPPED ✓</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILL CATALOG -->
+  <section id="skills" style="padding:clamp(72px,9vw,120px) clamp(20px,5vw,64px);max-width:1200px;margin:0 auto;">
+    <div data-reveal style="max-width:760px;margin-bottom:48px;">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:0.16em;text-transform:uppercase;color:#0E8F52;margin-bottom:18px;">The AI skill catalog</div>
+      <h2 style="font-family:'Fraunces',serif;font-weight:440;font-size:clamp(32px,4.4vw,48px);line-height:1.08;letter-spacing:-0.02em;margin:0 0 14px;">25+ AI skills across Ops &amp; GTM. New ones constantly added.</h2>
+      <p style="font-size:18px;line-height:1.6;color:#4a473c;margin:0;">Each skill maps to one specific shipped outcome. Every mentor is doing this work right now, not teaching it from theory.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:20px;" data-skill-grid>
+      <sc-for list="{{ skills }}" as="s" hint-placeholder-count="8">
+        <div data-reveal style="background:#FFFFFF;border:1px solid #E4DBC8;border-radius:18px;padding:24px;display:flex;flex-direction:column;transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;" style-hover="transform:translateY(-5px);box-shadow:0 22px 40px -24px rgba(14,59,46,0.3);border-color:#16B268;">
+          <div style="display:inline-flex;align-self:flex-start;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:#8a8570;border:1px solid #E4DBC8;border-radius:999px;padding:4px 10px;margin-bottom:16px;">{{ s.tag }}</div>
+          <h3 style="font-size:17.5px;font-weight:600;line-height:1.3;margin:0 0 10px;">{{ s.title }}</h3>
+          <p style="font-size:14px;line-height:1.55;color:#6a6656;margin:0 0 20px;flex:1;">{{ s.body }}</p>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding-top:16px;border-top:1px solid #F0E8D6;">
+            <span style="display:inline-flex;align-items:center;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;letter-spacing:0.06em;color:#0E8F52;background:rgba(22,178,104,0.1);border-radius:999px;padding:5px 11px;">{{ s.sessions }}</span>
+            <span style="display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.08em;color:#0E8F52;">SHIPPED <span style="width:15px;height:15px;border-radius:999px;border:1.4px solid #16B268;display:inline-flex;align-items:center;justify-content:center;font-size:9px;">✓</span></span>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <div data-reveal style="margin-top:36px;text-align:center;">
+      <a href="#" onClick="{{ openClient }}" style="display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-size:16px;font-weight:600;color:#15140E;padding:13px 24px;border-radius:999px;border:1px solid #E4DBC8;background:#FFFFFF;transition:border-color .2s ease;" style-hover="border-color:#FF6B45;">Don't see the skill you need? Request it <span style="color:#FF6B45;">→</span></a>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing" style="background:#F2EAD9;border-top:1px solid #E4DBC8;padding:clamp(72px,9vw,120px) clamp(20px,5vw,64px);">
+    <div style="max-width:1160px;margin:0 auto;">
+      <div data-reveal style="max-width:720px;margin-bottom:52px;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:0.16em;text-transform:uppercase;color:#0E8F52;margin-bottom:18px;">Simple pricing</div>
+        <h2 style="font-family:'Fraunces',serif;font-weight:440;font-size:clamp(30px,4vw,46px);line-height:1.1;letter-spacing:-0.02em;margin:0 0 14px;">No contracts, no setup fees, no seat licenses. Upskill your team immediately.</h2>
+        <p style="font-size:18px;line-height:1.6;color:#4a473c;margin:0;">Start with one person, one skill. Scale when it works.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr;gap:22px;align-items:stretch;" data-pricing-grid>
+        <!-- Starter -->
+        <div data-reveal style="background:#FBF6EC;border:1px solid #E4DBC8;border-radius:22px;padding:32px;display:flex;flex-direction:column;">
+          <h3 style="font-size:18px;font-weight:600;margin:0 0 8px;">Starter</h3>
+          <p style="font-size:14px;color:#6a6656;line-height:1.5;margin:0 0 22px;min-height:42px;">Try it with one team member. See if it works before going wider.</p>
+          <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:4px;"><span style="font-family:'Fraunces',serif;font-size:44px;font-weight:500;letter-spacing:-0.02em;">$200</span><span style="font-size:15px;color:#8a8570;">/ session</span></div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#8a8570;margin-bottom:24px;letter-spacing:0.03em;">30-MIN SESSION · 1 TEAM MEMBER</div>
+          <div style="display:flex;flex-direction:column;gap:11px;margin-bottom:28px;flex:1;">
+            <div style="display:flex;gap:10px;font-size:14.5px;color:#3a382e;"><span style="color:#16B268;flex-shrink:0;">✓</span>Live 1:1 session with a vetted mentor</div>
+            <div style="display:flex;gap:10px;font-size:14.5px;color:#3a382e;"><span style="color:#16B268;flex-shrink:0;">✓</span>AI-generated session summary + takeaways</div>
+            <div style="display:flex;gap:10px;font-size:14.5px;color:#3a382e;"><span style="color:#16B268;flex-shrink:0;">✓</span>Session recording</div>
+            <div style="display:flex;gap:10px;font-size:14.5px;color:#3a382e;"><span style="color:#16B268;flex-shrink:0;">✓</span>Outcome checklist</div>
+          </div>
+          <button onClick="{{ openClient }}" style="font-family:inherit;cursor:pointer;width:100%;font-size:16px;font-weight:600;color:#15140E;background:#FFFFFF;border:1px solid #E4DBC8;padding:14px;border-radius:999px;transition:border-color .2s ease;" style-hover="border-color:#FF6B45;">For Individuals / Teams 🚀</button>
+        </div>
+        <!-- Team (most popular) -->
+        <div data-reveal data-reveal-delay="90" style="position:relative;background:#FFFFFF;border:1px solid #16B268;border-top:4px solid #16B268;border-radius:22px;padding:32px;display:flex;flex-direction:column;box-shadow:0 30px 60px -34px rgba(14,143,82,0.5);">
+          <div style="position:absolute;top:-13px;left:50%;transform:translateX(-50%);font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:0.1em;color:#FBF6EC;background:#16B268;padding:5px 13px;border-radius:999px;white-space:nowrap;">MOST POPULAR</div>
+          <h3 style="font-size:18px;font-weight:600;margin:0 0 8px;">Team</h3>
+          <p style="font-size:14px;color:#6a6656;line-height:1.5;margin:0 0 22px;min-height:42px;">For managers ready to upskill 3–10 people across multiple skills.</p>
+          <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:4px;"><span style="font-family:'Fraunces',serif;font-size:44px;font-weight:500;letter-spacing:-0.02em;">$180</span><span style="font-size:15px;color:#8a8570;">/ session</span></div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#0E8F52;margin-bottom:24px;letter-spacing:0.03em;">10-SESSION BUNDLE · $1,800 · SAVE 10%</div>
+          <div style="display:flex;flex-direction:column;gap:11px;margin-bottom:28px;flex:1;">
+            <div style="display:flex;gap:10px;font-size:14.5px;color:#3a382e;"><span style="color:#16B268;flex-shrink:0;">✓</span>Everything in Starter</div>
+            <div style="display:flex;gap:10px;font-size:14.5px;color:#3a382e;"><span style="color:#16B268;flex-shrink:0;">✓</span>Manager dashboard with team progress</div>
+            <div style="display:flex;gap:10px;font-size:14.5px;color:#3a382e;"><span style="color:#16B268;flex-shrink:0;">✓</span>Use across any team members</div>
+            <div style="display:flex;gap:10px;font-size:14.5px;color:#3a382e;"><span style="color:#16B268;flex-shrink:0;">✓</span>Skills can span multiple mentors</div>
+            <div style="display:flex;gap:10px;font-size:14.5px;color:#3a382e;"><span style="color:#16B268;flex-shrink:0;">✓</span>Mentor matching support from the LetsGo team</div>
+          </div>
+          <button onClick="{{ openClient }}" style="font-family:inherit;cursor:pointer;width:100%;font-size:16px;font-weight:600;color:#15140E;background:#FF6B45;border:none;padding:14px;border-radius:999px;box-shadow:0 8px 20px rgba(255,107,69,0.3);transition:transform .2s ease, background .2s ease;" style-hover="transform:translateY(-2px);background:#f65b34;">For Individuals / Teams 🚀</button>
+        </div>
+        <!-- Company -->
+        <div data-reveal data-reveal-delay="180" style="background:#FBF6EC;border:1px solid #E4DBC8;border-radius:22px;padding:32px;display:flex;flex-direction:column;">
+          <h3 style="font-size:18px;font-weight:600;margin:0 0 8px;color:#0E3B2E;">Company</h3>
+          <p style="font-size:14px;color:#6a6656;line-height:1.5;margin:0 0 22px;min-height:42px;">For teams of 10+ building an ongoing AI upskilling program.</p>
+          <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:4px;"><span style="font-family:'Fraunces',serif;font-size:44px;font-weight:500;letter-spacing:-0.02em;">Let's talk</span></div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#8a8570;margin-bottom:24px;letter-spacing:0.03em;">CUSTOM VOLUME · PRIORITY MATCHING</div>
+          <div style="display:flex;flex-direction:column;gap:11px;margin-bottom:28px;flex:1;">
+            <div style="display:flex;gap:10px;font-size:14.5px;color:#3a382e;"><span style="color:#16B268;flex-shrink:0;">✓</span>Everything in Team</div>
+            <div style="display:flex;gap:10px;font-size:14.5px;color:#3a382e;"><span style="color:#16B268;flex-shrink:0;">✓</span>Dedicated account manager</div>
+            <div style="display:flex;gap:10px;font-size:14.5px;color:#3a382e;"><span style="color:#16B268;flex-shrink:0;">✓</span>Custom AI skill catalog curation</div>
+            <div style="display:flex;gap:10px;font-size:14.5px;color:#3a382e;"><span style="color:#16B268;flex-shrink:0;">✓</span>Quarterly team progress reports</div>
+            <div style="display:flex;gap:10px;font-size:14.5px;color:#3a382e;"><span style="color:#16B268;flex-shrink:0;">✓</span>Bulk session pricing</div>
+          </div>
+          <button onClick="{{ openClient }}" style="font-family:inherit;cursor:pointer;width:100%;font-size:16px;font-weight:600;color:#FBF6EC;background:#0E3B2E;border:none;padding:14px;border-radius:999px;transition:background .2s ease;" style-hover="background:#0A2C22;">Let's Talk!</button>
+        </div>
+      </div>
+      <div data-reveal style="text-align:center;margin-top:28px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#8a8570;letter-spacing:0.04em;">EACH SESSION IS 30 MINUTES</div>
+    </div>
+  </section>
+
+  <!-- OUTCOME GUARANTEE -->
+  <section style="position:relative;background:linear-gradient(180deg,#0E3B2E,#0A2C22);color:#FBF6EC;padding:clamp(72px,9vw,120px) clamp(20px,5vw,64px);overflow:hidden;text-align:center;">
+    <div style="max-width:720px;margin:0 auto;position:relative;">
+      <div data-stamp data-reveal style="width:132px;height:132px;margin:0 auto 34px;border-radius:999px;border:2.5px solid #16B268;display:flex;flex-direction:column;align-items:center;justify-content:center;transform:rotate(-8deg);box-shadow:0 0 0 8px rgba(22,178,104,0.1);">
+        <div style="font-size:34px;line-height:1;">🛡️</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#5fd39a;margin-top:6px;">100% GUARANTEE</div>
+      </div>
+      <h2 data-reveal style="font-family:'Fraunces',serif;font-weight:440;font-size:clamp(30px,4.4vw,48px);line-height:1.1;letter-spacing:-0.02em;margin:0 0 20px;">The LetsGo outcome guarantee</h2>
+      <p data-reveal style="font-size:clamp(17px,2vw,19px);line-height:1.65;color:rgba(251,246,236,0.85);margin:0;">Every session has a defined outcome. If your team member doesn't achieve that outcome, <strong style="color:#FBF6EC;font-weight:600;">you get your money back.</strong> No questions asked. <span style="color:#5fd39a;font-weight:500;">This is our 100% outcome guarantee!</span></p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" style="padding:clamp(72px,9vw,120px) clamp(20px,5vw,64px);max-width:1080px;margin:0 auto;">
+    <div data-reveal style="margin-bottom:44px;">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:0.16em;text-transform:uppercase;color:#0E8F52;margin-bottom:18px;">FAQ</div>
+      <h2 style="font-family:'Fraunces',serif;font-weight:440;font-size:clamp(30px,4vw,46px);line-height:1.1;letter-spacing:-0.02em;margin:0;">You may have some questions… <span style="color:#8a8570;">We have answers.</span></h2>
+    </div>
+    <div data-reveal style="border-top:1px solid #E4DBC8;">
+      <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="8">
+        <details style="border-bottom:1px solid #E4DBC8;padding:4px 0;">
+          <summary style="display:flex;align-items:flex-start;gap:18px;padding:22px 4px;font-size:clamp(16px,2vw,18.5px);font-weight:600;color:#15140E;line-height:1.4;">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#16B268;padding-top:4px;flex-shrink:0;">{{ f.n }}</span>
+            <span style="flex:1;">{{ f.q }}</span>
+            <span style="color:#8a8570;flex-shrink:0;font-size:14px;padding-top:4px;">＋</span>
+          </summary>
+          <p style="margin:0 0 22px 44px;font-size:16px;line-height:1.65;color:#4a473c;max-width:760px;">{{ f.a }}</p>
+        </details>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section style="position:relative;padding:clamp(72px,9vw,130px) clamp(20px,5vw,64px);text-align:center;overflow:hidden;">
+    <svg viewBox="0 0 600 200" preserveAspectRatio="xMidYMid meet" style="position:absolute;left:50%;top:20px;transform:translateX(-50%);width:min(600px,90%);height:200px;opacity:0.9;pointer-events:none;"><path data-draw d="M40 180 C 200 170, 340 120, 560 24" fill="none" stroke="#16B268" stroke-width="2.5" stroke-linecap="round"/><text x="560" y="20" font-size="26" text-anchor="middle">🚀</text></svg>
+    <div style="max-width:680px;margin:0 auto;position:relative;">
+      <h2 data-reveal style="font-family:'Fraunces',serif;font-weight:440;font-size:clamp(34px,5vw,60px);line-height:1.05;letter-spacing:-0.022em;margin:0 0 20px;">Ready to upskill your team?</h2>
+      <p data-reveal style="font-size:clamp(17px,2vw,19px);line-height:1.6;color:#4a473c;margin:0 0 34px;">Pick one skill. Start with one session. See if it works. We're confident it will. And it's backed by our <strong style="color:#15140E;font-weight:600;">100% outcome guarantee.</strong></p>
+      <button data-reveal onClick="{{ openClient }}" style="font-family:inherit;cursor:pointer;font-size:18px;font-weight:600;color:#15140E;background:#FF6B45;border:none;padding:17px 34px;border-radius:999px;box-shadow:0 12px 30px rgba(255,107,69,0.34);transition:transform .2s ease, box-shadow .2s ease, background .2s ease;" style-hover="transform:translateY(-2px);box-shadow:0 16px 38px rgba(255,107,69,0.44);background:#f65b34;">For Individuals / Teams 🚀</button>
+    </div>
+  </section>
+
+  <!-- MENTOR RECRUITMENT TEASER -->
+  <section id="mentor" style="background:#F2EAD9;border-top:1px solid #E4DBC8;padding:clamp(64px,8vw,110px) clamp(20px,5vw,64px);">
+    <div style="max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:40px;align-items:center;" data-mentor-teaser>
+      <div data-reveal>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:0.16em;text-transform:uppercase;color:#0E8F52;margin-bottom:18px;">Want to be a mentor?</div>
+        <h2 style="font-family:'Fraunces',serif;font-weight:440;font-size:clamp(30px,4vw,46px);line-height:1.08;letter-spacing:-0.02em;margin:0 0 18px;">Help people become more skilled with AI. And get paid for it.</h2>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px;">
+          <span style="display:inline-flex;align-items:center;gap:8px;background:#FFFFFF;border:1px solid #E4DBC8;border-radius:999px;padding:9px 15px;font-size:14px;font-weight:500;"><span style="color:#16B268;">✦</span>See the impact you make</span>
+          <span style="display:inline-flex;align-items:center;gap:8px;background:#FFFFFF;border:1px solid #E4DBC8;border-radius:999px;padding:9px 15px;font-size:14px;font-weight:500;"><span style="color:#16B268;">✦</span>Mentor on your own schedule</span>
+          <span style="display:inline-flex;align-items:center;gap:8px;background:#FFFFFF;border:1px solid #E4DBC8;border-radius:999px;padding:9px 15px;font-size:14px;font-weight:500;"><span style="color:#16B268;">✦</span>Simple payout for your sessions</span>
+        </div>
+        <a href="#mentor-page" onClick="{{ goMentor }}" style="display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-size:16px;font-weight:600;color:#FBF6EC;background:#16B268;padding:15px 26px;border-radius:999px;box-shadow:0 10px 24px rgba(22,178,104,0.3);transition:transform .2s ease, background .2s ease;" style-hover="transform:translateY(-2px);background:#0E8F52;">Apply to be a mentor →</a>
+      </div>
+      <div data-reveal data-reveal-delay="120" style="background:#0E3B2E;border-radius:22px;padding:30px;color:#FBF6EC;box-shadow:0 30px 60px -34px rgba(14,59,46,0.6);">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#5fd39a;margin-bottom:20px;">MENTOR PAYOUT</div>
+        <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:10px;"><span style="font-family:'Fraunces',serif;font-size:60px;font-weight:500;line-height:1;color:#FBF6EC;">70%</span><span style="font-size:15px;color:rgba(251,246,236,0.7);">per session</span></div>
+        <p style="font-size:15px;line-height:1.6;color:rgba(251,246,236,0.78);margin:0 0 18px;">Plus 90% on customers you refer directly. Teach the AI work you already ship.</p>
+        <div style="display:inline-flex;align-items:center;gap:7px;padding:7px 13px;border-radius:999px;border:1.5px solid #16B268;background:rgba(22,178,104,0.14);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.08em;color:#5fd39a;">WE REPLY WITHIN A WEEK</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="position:relative;background:linear-gradient(180deg,#0A2C22,#08221a);color:#FBF6EC;padding:clamp(56px,7vw,90px) clamp(20px,5vw,64px) 40px;overflow:hidden;">
+    <div style="max-width:1160px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:40px;">
+      <div>
+        <div style="font-family:'Fraunces',serif;font-weight:560;font-size:26px;letter-spacing:-0.02em;margin-bottom:10px;">Lets<span style="color:#FF6B45;">Go</span>🚀</div>
+        <p style="font-size:15px;color:rgba(251,246,236,0.6);margin:0;max-width:280px;">The 1:1 AI upskilling platform.</p>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:48px;">
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.1em;color:#5fd39a;">EXPLORE</div>
+          <a href="#skills" style="text-decoration:none;font-size:15px;color:rgba(251,246,236,0.78);">Skills</a>
+          <a href="#pricing" style="text-decoration:none;font-size:15px;color:rgba(251,246,236,0.78);">For teams</a>
+          <a href="#mentor-page" onClick="{{ goMentor }}" style="text-decoration:none;font-size:15px;color:rgba(251,246,236,0.78);">Become a mentor</a>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.1em;color:#5fd39a;">SAY HELLO</div>
+          <a href="mailto:hello@letsgo.co" style="text-decoration:none;font-size:15px;color:rgba(251,246,236,0.78);">hello@letsgo.co</a>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:1160px;margin:44px auto 0;padding-top:24px;border-top:1px solid rgba(251,246,236,0.12);display:flex;align-items:center;justify-content:space-between;">
+      <div style="font-size:13px;color:rgba(251,246,236,0.5);font-family:'JetBrains Mono',monospace;">© 2026 LETSGO · LETSGO.CO</div>
+      <div style="font-size:22px;">🚀</div>
+    </div>
+  </footer>
+
+</main>
+</sc-if>
+
+<!-- ============ MENTOR ROUTE ============ -->
+<sc-if value="{{ isMentor }}">
+<main id="mentor-page" style="position:relative;z-index:2;">
+  <section style="padding:clamp(40px,6vw,72px) clamp(20px,5vw,64px) clamp(24px,4vw,40px);max-width:1120px;margin:0 auto;">
+    <a href="#" onClick="{{ goHome }}" style="display:inline-flex;align-items:center;gap:7px;white-space:nowrap;text-decoration:none;font-size:14px;font-weight:500;color:#6a6656;margin-bottom:34px;">← Back to LetsGo</a>
+    <div style="display:grid;grid-template-columns:1fr;gap:clamp(36px,5vw,60px);align-items:center;" data-mentor-hero>
+      <div data-reveal>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:0.16em;text-transform:uppercase;color:#0E8F52;margin-bottom:20px;display:inline-flex;align-items:center;gap:8px;"><span style="width:8px;height:8px;border-radius:999px;background:#16B268;"></span>For AI mentors</div>
+        <h1 style="font-family:'Fraunces',serif;font-weight:460;font-size:clamp(38px,5.6vw,64px);line-height:1.03;letter-spacing:-0.022em;margin:0 0 22px;">Get paid to teach what you <span style="font-style:italic;position:relative;white-space:nowrap;">already do<svg viewBox="0 0 200 12" preserveAspectRatio="none" style="position:absolute;left:0;bottom:-6px;width:100%;height:10px;overflow:visible;"><path data-draw d="M3 7 C 60 1, 140 1, 197 5" fill="none" stroke="#16B268" stroke-width="3.5" stroke-linecap="round"/></svg></span>.</h1>
+        <p style="font-size:clamp(16px,2vw,18.5px);line-height:1.6;color:#4a473c;margin:0 0 30px;max-width:480px;">LetsGo mentors actively ship AI work — not retired experts or professional coaches. Tell us about your work. Takes two minutes.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.06em;color:#0E8F52;background:rgba(22,178,104,0.1);border:1px solid rgba(22,178,104,0.3);border-radius:999px;padding:8px 14px;">KEEP 70% PER SESSION</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.06em;color:#0E8F52;background:rgba(22,178,104,0.1);border:1px solid rgba(22,178,104,0.3);border-radius:999px;padding:8px 14px;">90% ON YOUR REFERRALS</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.06em;color:#0E8F52;background:rgba(22,178,104,0.1);border:1px solid rgba(22,178,104,0.3);border-radius:999px;padding:8px 14px;">WE REPLY WITHIN A WEEK</span>
+        </div>
+      </div>
+      <!-- who we're looking for card -->
+      <div data-reveal data-reveal-delay="120" style="background:#0E3B2E;color:#FBF6EC;border-radius:22px;padding:clamp(26px,3vw,36px);box-shadow:0 30px 60px -34px rgba(14,59,46,0.6);position:relative;">
+        <div data-stamp style="position:absolute;top:-16px;right:-8px;width:82px;height:82px;border-radius:999px;background:#FBF6EC;border:2px solid #16B268;display:flex;flex-direction:column;align-items:center;justify-content:center;transform:rotate(-9deg);box-shadow:0 12px 28px -10px rgba(14,143,82,0.5);animation:lg-stamp .5s ease .4s both;"><div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:0.08em;color:#0E8F52;">SHIPPED</div><div style="font-size:18px;color:#16B268;line-height:1;">✓</div></div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#5fd39a;margin-bottom:22px;">WHO WE'RE LOOKING FOR</div>
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div style="display:flex;gap:13px;font-size:15px;line-height:1.45;color:rgba(251,246,236,0.9);"><span style="width:22px;height:22px;border-radius:999px;background:rgba(22,178,104,0.2);color:#5fd39a;display:inline-flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;">✓</span>You are shipping AI work in your current role</div>
+          <div style="display:flex;gap:13px;font-size:15px;line-height:1.45;color:rgba(251,246,236,0.9);"><span style="width:22px;height:22px;border-radius:999px;background:rgba(22,178,104,0.2);color:#5fd39a;display:inline-flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;">✓</span>You work in Ops, GTM, CS, or adjacent functions</div>
+          <div style="display:flex;gap:13px;font-size:15px;line-height:1.45;color:rgba(251,246,236,0.9);"><span style="width:22px;height:22px;border-radius:999px;background:rgba(22,178,104,0.2);color:#5fd39a;display:inline-flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;">✓</span>You can explain what you are doing to a non-technical person</div>
+          <div style="display:flex;gap:13px;font-size:15px;line-height:1.45;color:rgba(251,246,236,0.9);"><span style="width:22px;height:22px;border-radius:999px;background:rgba(22,178,104,0.2);color:#5fd39a;display:inline-flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;">✓</span>You can teach under time pressure — 30 mins, real outcomes</div>
+          <div style="display:flex;gap:13px;font-size:15px;line-height:1.45;color:rgba(251,246,236,0.9);"><span style="width:22px;height:22px;border-radius:999px;background:rgba(22,178,104,0.2);color:#5fd39a;display:inline-flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;">✓</span>You want to help others build real skills and grow their careers</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- mentor form -->
+  <section style="padding:clamp(24px,3vw,40px) clamp(20px,5vw,64px) clamp(72px,9vw,120px);max-width:720px;margin:0 auto;">
+    <sc-if value="{{ mentorDone }}">
+      <div style="background:#FFFFFF;border:1px solid #E4DBC8;border-radius:24px;padding:clamp(40px,6vw,64px);text-align:center;box-shadow:0 30px 70px -40px rgba(14,59,46,0.4);">
+        <div data-stamp style="width:120px;height:120px;margin:0 auto 28px;border-radius:999px;border:2.5px solid #16B268;display:flex;flex-direction:column;align-items:center;justify-content:center;transform:rotate(-8deg);animation:lg-stamp .5s ease both;"><div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.1em;color:#0E8F52;">RECEIVED</div><div style="font-size:32px;color:#16B268;line-height:1;">✓</div></div>
+        <h2 style="font-family:'Fraunces',serif;font-weight:460;font-size:clamp(26px,3.4vw,36px);margin:0 0 12px;letter-spacing:-0.02em;">Application in.</h2>
+        <p style="font-size:17px;color:#4a473c;line-height:1.6;margin:0 0 26px;">We'll reply within a week. Keep shipping. 🚀</p>
+        <button onClick="{{ goHome }}" style="font-family:inherit;cursor:pointer;font-size:16px;font-weight:600;color:#FBF6EC;background:#16B268;border:none;padding:13px 26px;border-radius:999px;transition:background .2s ease;" style-hover="background:#0E8F52;">Back to LetsGo</button>
+      </div>
+    </sc-if>
+    <sc-if value="{{ mentorShowForm }}" hint-placeholder-val="{{ true }}">
+    <form onSubmit="{{ submitMentor }}" style="background:#FFFFFF;border:1px solid #E4DBC8;border-radius:24px;padding:clamp(26px,4vw,40px);box-shadow:0 30px 70px -44px rgba(14,59,46,0.35);">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px;" data-name-row>
+        <label style="display:flex;flex-direction:column;gap:7px;"><span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#8a8570;">First name</span><input required type="text" placeholder="Maya" style="font-family:inherit;font-size:15px;color:#15140E;background:#F2EAD9;border:1px solid #E4DBC8;border-radius:12px;padding:13px 15px;outline:none;transition:border-color .18s ease, box-shadow .18s ease;" style-focus="border-color:#16B268;box-shadow:0 0 0 3px rgba(22,178,104,0.25);"></label>
+        <label style="display:flex;flex-direction:column;gap:7px;"><span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#8a8570;">Last name</span><input required type="text" placeholder="Levi" style="font-family:inherit;font-size:15px;color:#15140E;background:#F2EAD9;border:1px solid #E4DBC8;border-radius:12px;padding:13px 15px;outline:none;transition:border-color .18s ease, box-shadow .18s ease;" style-focus="border-color:#16B268;box-shadow:0 0 0 3px rgba(22,178,104,0.25);"></label>
+      </div>
+      <label style="display:flex;flex-direction:column;gap:7px;margin-bottom:18px;"><span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#8a8570;">Email</span><input required type="email" placeholder="maya@company.com" style="font-family:inherit;font-size:15px;color:#15140E;background:#F2EAD9;border:1px solid #E4DBC8;border-radius:12px;padding:13px 15px;outline:none;transition:border-color .18s ease, box-shadow .18s ease;" style-focus="border-color:#16B268;box-shadow:0 0 0 3px rgba(22,178,104,0.25);"></label>
+      <label style="display:flex;flex-direction:column;gap:7px;margin-bottom:18px;"><span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#8a8570;">Current role &amp; company</span><input required type="text" placeholder="e.g. Head of Lifecycle, Yotpo" style="font-family:inherit;font-size:15px;color:#15140E;background:#F2EAD9;border:1px solid #E4DBC8;border-radius:12px;padding:13px 15px;outline:none;transition:border-color .18s ease, box-shadow .18s ease;" style-focus="border-color:#16B268;box-shadow:0 0 0 3px rgba(22,178,104,0.25);"></label>
+      <label style="display:flex;flex-direction:column;gap:7px;margin-bottom:22px;"><span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#8a8570;">LinkedIn</span><input required type="url" placeholder="linkedin.com/in/…" style="font-family:inherit;font-size:15px;color:#15140E;background:#F2EAD9;border:1px solid #E4DBC8;border-radius:12px;padding:13px 15px;outline:none;transition:border-color .18s ease, box-shadow .18s ease;" style-focus="border-color:#16B268;box-shadow:0 0 0 3px rgba(22,178,104,0.25);"></label>
+      <!-- soul question 1 -->
+      <label style="display:block;background:#FBF6EC;border:1px solid #E4DBC8;border-left:4px solid #16B268;border-radius:12px;padding:18px;margin-bottom:16px;"><span style="display:block;font-size:15.5px;font-weight:600;color:#15140E;margin-bottom:10px;">What's one AI workflow you built or use every week?</span><textarea required rows="3" placeholder="e.g. A Clay + AI enrichment flow that writes a first line for every lead…" style="width:100%;font-family:inherit;font-size:15px;color:#15140E;background:#FFFFFF;border:1px solid #E4DBC8;border-radius:10px;padding:12px 14px;outline:none;resize:vertical;transition:border-color .18s ease, box-shadow .18s ease;" style-focus="border-color:#16B268;box-shadow:0 0 0 3px rgba(22,178,104,0.25);"></textarea></label>
+      <!-- soul question 2 -->
+      <label style="display:block;background:#FBF6EC;border:1px solid #E4DBC8;border-left:4px solid #16B268;border-radius:12px;padding:18px;margin-bottom:18px;"><span style="display:block;font-size:15.5px;font-weight:600;color:#15140E;margin-bottom:4px;">How would you explain that to someone who's never touched an AI tool?</span><span style="display:block;font-size:13px;color:#8a8570;margin-bottom:10px;">2–3 sentences. No jargon.</span><textarea required rows="3" placeholder="Explain it like you would to a smart friend over coffee…" style="width:100%;font-family:inherit;font-size:15px;color:#15140E;background:#FFFFFF;border:1px solid #E4DBC8;border-radius:10px;padding:12px 14px;outline:none;resize:vertical;transition:border-color .18s ease, box-shadow .18s ease;" style-focus="border-color:#16B268;box-shadow:0 0 0 3px rgba(22,178,104,0.25);"></textarea></label>
+      <label style="display:flex;flex-direction:column;gap:7px;margin-bottom:26px;"><span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#8a8570;">How'd you hear about LetsGo? <span style="text-transform:none;letter-spacing:0;">(optional)</span></span><input type="text" placeholder="A friend, LinkedIn, Moe…" style="font-family:inherit;font-size:15px;color:#15140E;background:#F2EAD9;border:1px solid #E4DBC8;border-radius:12px;padding:13px 15px;outline:none;transition:border-color .18s ease, box-shadow .18s ease;" style-focus="border-color:#16B268;box-shadow:0 0 0 3px rgba(22,178,104,0.25);"></label>
+      <button type="submit" style="font-family:inherit;cursor:pointer;width:100%;font-size:17px;font-weight:600;color:#FBF6EC;background:#16B268;border:none;padding:16px;border-radius:999px;box-shadow:0 10px 26px rgba(22,178,104,0.3);transition:transform .2s ease, background .2s ease;" style-hover="transform:translateY(-2px);background:#0E8F52;">Apply to mentor →</button>
+    </form>
+    </sc-if>
+  </section>
+
+  <!-- footer (mentor) -->
+  <footer style="background:linear-gradient(180deg,#0A2C22,#08221a);color:#FBF6EC;padding:clamp(48px,6vw,72px) clamp(20px,5vw,64px) 36px;">
+    <div style="max-width:1160px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;gap:24px;align-items:center;">
+      <div><div style="font-family:'Fraunces',serif;font-weight:560;font-size:24px;letter-spacing:-0.02em;">Lets<span style="color:#FF6B45;">Go</span>🚀</div><p style="font-size:14px;color:rgba(251,246,236,0.6);margin:8px 0 0;">The 1:1 AI upskilling platform.</p></div>
+      <a href="mailto:hello@letsgo.co" style="text-decoration:none;font-size:15px;color:rgba(251,246,236,0.78);">hello@letsgo.co</a>
+    </div>
+    <div style="max-width:1160px;margin:32px auto 0;padding-top:22px;border-top:1px solid rgba(251,246,236,0.12);font-size:13px;color:rgba(251,246,236,0.5);font-family:'JetBrains Mono',monospace;">© 2026 LETSGO · LETSGO.CO</div>
+  </footer>
+</main>
+</sc-if>
+
+<!-- ============ CLIENT MODAL ============ -->
+<sc-if value="{{ clientOpen }}">
+<div onClick="{{ closeClient }}" style="position:fixed;inset:0;z-index:100;background:rgba(14,59,46,0.55);backdrop-filter:blur(6px);display:flex;align-items:flex-end;justify-content:center;padding:0;" data-scrim>
+  <div onClick="{{ stop }}" role="dialog" aria-modal="true" style="position:relative;width:100%;max-width:520px;max-height:94vh;overflow-y:auto;background:#FBF6EC;border:1px solid #E4DBC8;border-radius:22px 22px 0 0;padding:clamp(26px,5vw,40px);box-shadow:0 -20px 60px rgba(8,34,26,0.4);animation:lg-stamp .01s;" data-modal-card>
+    <div style="position:absolute;inset:0;pointer-events:none;border-radius:22px;opacity:0.05;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n2'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n2)'/%3E%3C/svg%3E&quot;);"></div>
+    <button onClick="{{ closeClient }}" aria-label="Close" style="position:absolute;top:18px;right:18px;width:36px;height:36px;border-radius:999px;border:1px solid #E4DBC8;background:#FFFFFF;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:15px;color:#8a8570;display:flex;align-items:center;justify-content:center;z-index:2;">✕</button>
+
+    <sc-if value="{{ clientDone }}">
+      <div style="text-align:center;padding:20px 0 8px;position:relative;">
+        <div data-stamp style="width:120px;height:120px;margin:0 auto 26px;border-radius:999px;border:2.5px solid #16B268;display:flex;flex-direction:column;align-items:center;justify-content:center;transform:rotate(-8deg);animation:lg-stamp .5s ease both;"><div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.1em;color:#0E8F52;">SHIPPED</div><div style="font-size:32px;color:#16B268;line-height:1;">✓</div></div>
+        <h2 style="font-family:'Fraunces',serif;font-weight:460;font-size:clamp(26px,4vw,34px);margin:0 0 12px;letter-spacing:-0.02em;">You're on the list.</h2>
+        <p style="font-size:16px;color:#4a473c;line-height:1.6;margin:0 0 26px;">Check your inbox — we'll be in touch. Let's go 🚀</p>
+        <button onClick="{{ closeClient }}" style="font-family:inherit;cursor:pointer;font-size:16px;font-weight:600;color:#15140E;background:#FF6B45;border:none;padding:13px 26px;border-radius:999px;transition:background .2s ease;" style-hover="background:#f65b34;">Done</button>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ clientShowForm }}" hint-placeholder-val="{{ true }}">
+    <div style="position:relative;">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#FF6B45;margin-bottom:12px;">Early access</div>
+      <h2 style="font-family:'Fraunces',serif;font-weight:460;font-size:clamp(26px,4.4vw,32px);letter-spacing:-0.02em;margin:0 0 8px;">Get on the list<span style="color:#FF6B45;">.</span></h2>
+      <p style="font-size:15.5px;color:#4a473c;line-height:1.55;margin:0 0 26px;">For your team, or just for you. Tell us what you want to learn.</p>
+      <form onSubmit="{{ submitClient }}">
+        <label style="display:flex;flex-direction:column;gap:7px;margin-bottom:16px;"><span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#8a8570;">Full name</span><input required type="text" placeholder="Jordan Rivera" style="font-family:inherit;font-size:15px;color:#15140E;background:#F2EAD9;border:1px solid #E4DBC8;border-radius:12px;padding:13px 15px;outline:none;transition:border-color .18s ease, box-shadow .18s ease;" style-focus="border-color:#FF6B45;box-shadow:0 0 0 3px rgba(255,107,69,0.25);"></label>
+        <label style="display:flex;flex-direction:column;gap:7px;margin-bottom:16px;"><span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#8a8570;">Work email</span><input required type="email" placeholder="jordan@company.com" style="font-family:inherit;font-size:15px;color:#15140E;background:#F2EAD9;border:1px solid #E4DBC8;border-radius:12px;padding:13px 15px;outline:none;transition:border-color .18s ease, box-shadow .18s ease;" style-focus="border-color:#FF6B45;box-shadow:0 0 0 3px rgba(255,107,69,0.25);"></label>
+        <label style="display:flex;flex-direction:column;gap:7px;margin-bottom:20px;"><span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#8a8570;">Team size</span>
+          <select required style="font-family:inherit;font-size:15px;color:#15140E;background:#F2EAD9;border:1px solid #E4DBC8;border-radius:12px;padding:13px 15px;outline:none;cursor:pointer;appearance:none;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23FF6B45' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E&quot;);background-repeat:no-repeat;background-position:right 16px center;" style-focus="border-color:#FF6B45;box-shadow:0 0 0 3px rgba(255,107,69,0.25);">
+            <option value="">Select…</option>
+            <option>Just me (1)</option>
+            <option>2–5</option>
+            <option>6–10</option>
+            <option>10+</option>
+          </select>
+        </label>
+        <div style="margin-bottom:24px;">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#8a8570;margin-bottom:12px;">What are you trying to do?</div>
+          <div style="display:flex;flex-wrap:wrap;gap:9px;" data-chip-group>
+            <button type="button" onClick="{{ selectChip }}" aria-pressed="false" style="font-family:inherit;cursor:pointer;font-size:13.5px;font-weight:500;color:#15140E;background:#F2EAD9;border:1px solid #E4DBC8;border-radius:999px;padding:9px 15px;transition:all .15s ease;">Build a specific workflow</button>
+            <button type="button" onClick="{{ selectChip }}" aria-pressed="false" style="font-family:inherit;cursor:pointer;font-size:13.5px;font-weight:500;color:#15140E;background:#F2EAD9;border:1px solid #E4DBC8;border-radius:999px;padding:9px 15px;transition:all .15s ease;">Get my team using AI day-to-day</button>
+            <button type="button" onClick="{{ selectChip }}" aria-pressed="false" style="font-family:inherit;cursor:pointer;font-size:13.5px;font-weight:500;color:#15140E;background:#F2EAD9;border:1px solid #E4DBC8;border-radius:999px;padding:9px 15px;transition:all .15s ease;">Not sure yet — just exploring</button>
+            <button type="button" onClick="{{ selectChip }}" aria-pressed="false" style="font-family:inherit;cursor:pointer;font-size:13.5px;font-weight:500;color:#15140E;background:#F2EAD9;border:1px solid #E4DBC8;border-radius:999px;padding:9px 15px;transition:all .15s ease;">Other</button>
+          </div>
+        </div>
+        <button type="submit" style="font-family:inherit;cursor:pointer;width:100%;font-size:17px;font-weight:600;color:#15140E;background:#FF6B45;border:none;padding:16px;border-radius:999px;box-shadow:0 10px 26px rgba(255,107,69,0.32);transition:transform .2s ease, background .2s ease;" style-hover="transform:translateY(-2px);background:#f65b34;">Get on the list →</button>
+        <div style="text-align:center;font-size:12.5px;color:#8a8570;margin-top:14px;">🛡️ Backed by the 100% outcome guarantee. No spam.</div>
+      </form>
+    </div>
+    </sc-if>
+  </div>
+</div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { route: 'home', clientOpen: false, clientDone: false, mentorDone: false };
+
+  componentDidMount() {
+    this.initAnim();
+    this._onKey = (e) => { if (e.key === 'Escape' && this.state.clientOpen) this.closeClient(); };
+    window.addEventListener('keydown', this._onKey);
+  }
+  componentDidUpdate(pp, ps) {
+    if (ps.route !== this.state.route) {
+      window.scrollTo(0, 0);
+      requestAnimationFrame(() => this.initAnim());
+    }
+    if (this.state.clientOpen !== ps.clientOpen) {
+      document.body.style.overflow = this.state.clientOpen ? 'hidden' : '';
+    }
+    if (this.state.clientOpen && !ps.clientOpen) {
+      requestAnimationFrame(() => this.initAnim());
+    }
+  }
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this._onKey);
+    if (this._onScroll) window.removeEventListener('scroll', this._onScroll);
+    document.body.style.overflow = '';
+  }
+
+  initAnim() {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.querySelectorAll('[data-reveal]').forEach((el) => {
+      if (el.__seen) return;
+      el.style.opacity = '0';
+      if (!reduce) el.style.transform = 'translateY(14px)';
+      el.style.transition = 'opacity .6s ease, transform .6s ease';
+    });
+    document.querySelectorAll('[data-draw]').forEach((p) => {
+      if (p.__drawn) return;
+      try {
+        const len = p.getTotalLength();
+        p.style.strokeDasharray = len;
+        p.style.strokeDashoffset = reduce ? 0 : len;
+        p.style.transition = 'stroke-dashoffset 1.2s ease';
+      } catch (err) {}
+    });
+    if (this._onScroll) window.removeEventListener('scroll', this._onScroll);
+    this._onScroll = () => {
+      const trigger = window.innerHeight * 0.88;
+      document.querySelectorAll('[data-reveal]').forEach((el) => {
+        if (el.__seen) return;
+        if (el.getBoundingClientRect().top < trigger) {
+          el.__seen = true;
+          const d = parseInt(el.getAttribute('data-reveal-delay') || '0', 10);
+          setTimeout(() => { el.style.opacity = '1'; el.style.transform = 'none'; }, d);
+        }
+      });
+      document.querySelectorAll('[data-draw]').forEach((p) => {
+        if (p.__drawn) return;
+        if (p.getBoundingClientRect().top < window.innerHeight * 0.95) { p.__drawn = true; p.style.strokeDashoffset = '0'; }
+      });
+    };
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+    requestAnimationFrame(() => { this._onScroll(); requestAnimationFrame(this._onScroll); });
+  }
+
+  openClient = () => this.setState({ clientOpen: true, clientDone: false });
+  closeClient = () => this.setState({ clientOpen: false });
+  submitClient = (e) => { e.preventDefault(); this.setState({ clientDone: true }); };
+  goMentor = (e) => { if (e) e.preventDefault(); this.setState({ route: 'mentor', mentorDone: false, clientOpen: false }); };
+  goHome = (e) => { if (e) e.preventDefault(); this.setState({ route: 'home' }); };
+  submitMentor = (e) => { e.preventDefault(); this.setState({ mentorDone: true }); };
+  stop = (e) => { e.stopPropagation(); };
+  selectChip = (e) => {
+    const btn = e.currentTarget;
+    const grp = btn.parentElement;
+    Array.from(grp.children).forEach((c) => {
+      c.style.background = '#F2EAD9';
+      c.style.borderColor = '#E4DBC8';
+      c.style.color = '#15140E';
+      c.setAttribute('aria-pressed', 'false');
+    });
+    btn.style.background = 'rgba(255,107,69,0.12)';
+    btn.style.borderColor = '#FF6B45';
+    btn.style.color = '#15140E';
+    btn.setAttribute('aria-pressed', 'true');
+  };
+
+  renderVals() {
+    const skills = [
+      { tag: 'GTM', title: 'AI agent for your GTM workflow', body: 'Reps stop doing research. The agent prospects, enriches, and queues outreach automatically before they open their laptop.', sessions: '3 SESSIONS' },
+      { tag: 'Ops', title: 'Automate 80% of customer tickets with AI', body: 'AI handles the repetitive. Your team handles the complex. Response times drop, CSAT goes up.', sessions: '3 SESSIONS' },
+      { tag: 'GTM', title: 'AI marketing campaign: brief to assets', body: 'One brief in. Copy, ads, landing page, and social posts out. Hours, not a two-week creative sprint.', sessions: '3 SESSIONS' },
+      { tag: 'Ops', title: 'AI post-call automation pipeline', body: 'Call ends. CRM updated, follow-up drafted, next steps logged. No one touches a keyboard.', sessions: '2 SESSIONS' },
+      { tag: 'GTM', title: 'Build a lead enrichment workflow with Clay + AI', body: 'Turn a raw list into a personalized outreach engine. Pull LinkedIn, Clearbit, and website data, then write the first line automatically for every lead.', sessions: '3 SESSIONS' },
+      { tag: 'Ops', title: 'Internal AI knowledge base, finally useful', body: 'SOPs, tone, and processes trained into Claude. Every team member gets instant, accurate answers instead of Slack pings.', sessions: '3 SESSIONS' },
+      { tag: 'GTM', title: 'Score your pipeline with AI, no data team required', body: 'A spreadsheet-based AI model that flags which deals are worth pursuing this week. Your data, not a vendor algorithm.', sessions: '3 SESSIONS' },
+      { tag: 'Ops', title: 'Weekly AI ops brief that writes itself', body: 'Notion, Slack, and project tools pulled together and prioritized by AI before you open your laptop Monday.', sessions: '2 SESSIONS' },
+    ];
+    const faqs = [
+      { n: '01', q: 'What exactly happens in a session?', a: 'Each session is a live 30-minute 1:1 video call. Your team member comes in with a specific goal, and the mentor helps them build, ship, or solve it in real time. You don\u2019t watch. You do. Every session ends with an AI-written recap and a clear next step.' },
+      { n: '02', q: 'How is this different from just hiring a consultant?', a: 'A consultant does it for you. A mentor makes sure your team can do it themselves, and keep doing it after the session ends. The capability stays inside your company. That is the whole model.' },
+      { n: '03', q: 'What is the 100% outcome guarantee?', a: 'If your team member doesn\u2019t leave a session with a clear, shipped output (a workflow built, a system set up, a deliverable done), you get your money back. No questions asked.' },
+      { n: '04', q: 'How are mentors vetted?', a: 'We only work with people actively doing the skill right now, not retired experts or professional coaches. Every mentor is reviewed for current role relevance, depth of practice, and the ability to teach under time pressure. We are extremely selective about the mentors we choose.' },
+      { n: '05', q: 'Can I pick the mentor, or do you assign one?', a: 'Both. Browse the catalog and pick someone whose background matches your team\u2019s context, or tell us the skill and we match you. Either way, you see who you are getting before you book.' },
+      { n: '06', q: 'What if my team has never used AI tools before?', a: 'That is a common starting point. Sessions are scoped to where your team member actually is, not where we assume they should be. No jargon, no assumed knowledge.' },
+      { n: '07', q: 'Do unused sessions expire?', a: 'Bundle sessions are valid for up to 12 months from purchase and can be used by any team member at any time. Buy when it makes sense for your budget, use when it makes sense for your team.' },
+      { n: '08', q: 'How do I become a mentor on LetsGo?', a: 'If you are actively shipping AI work and want to teach it 1:1, apply through the "Become a mentor" form or email hello@letsgo.co. We respond within a week. Mentors keep 70% of every session, plus 90% on customers they refer directly.' },
+    ];
+    return {
+      isHome: this.state.route === 'home',
+      isMentor: this.state.route === 'mentor',
+      clientOpen: this.state.clientOpen,
+      clientDone: this.state.clientDone,
+      clientShowForm: !this.state.clientDone,
+      mentorDone: this.state.mentorDone,
+      mentorShowForm: !this.state.mentorDone,
+      openClient: this.openClient,
+      closeClient: this.closeClient,
+      submitClient: this.submitClient,
+      goMentor: this.goMentor,
+      goHome: this.goHome,
+      submitMentor: this.submitMentor,
+      selectChip: this.selectChip,
+      stop: this.stop,
+      skills,
+      faqs,
+    };
+  }
+}
+</script>
+</body>
+</html>
